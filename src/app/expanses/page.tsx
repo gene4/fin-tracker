@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { auth } from "@clerk/nextjs/server";
 import { ExpansesBarChart } from "./expanses-bar-chart";
 import { Expanse } from "@/types";
+import { ExpansesPieChart } from "./expanses-pie-chart";
 
 export default async function Page() {
     const supabase = await createClient();
@@ -21,7 +22,7 @@ export default async function Page() {
     return (
         <>
             <h1 className="text-3xl font-bold tracking-tight">Expanses</h1>
-
+            <ExpansesPieChart data={expanses as Expanse[]} />
             <ExpansesBarChart data={expanses as Expanse[]} />
         </>
     );

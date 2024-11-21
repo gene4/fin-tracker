@@ -38,13 +38,18 @@ body {
 
         --radius: 0.5rem;
 
-        --chart-1: 260 80% 60%;
-        --chart-2: 220 70% 50%;
-        --chart-3: 180 60% 50%;
-        --chart-4: 300 70% 60%;
-        --chart-5: 340 75% 55%;
+        --chart-1: 220 70% 50%;
+        --chart-5: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-2: 340 75% 55%;
+        --chart-6: 120 65% 50%;
+        --chart-7: 200 60% 55%;
+        --chart-8: 50 70% 50%;
+        --chart-9: 10 80% 60%;
+        --chart-10: 300 75% 50%;
 
-        --sidebar-background: 260 20% 8%;
+        --sidebar-background: 260 23% 7%;
         --sidebar-foreground: 260 20% 95%;
         --sidebar-primary: 260 80% 60%;
         --sidebar-primary-foreground: 260 20% 98%;

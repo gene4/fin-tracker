@@ -37,7 +37,6 @@ const chartConfigs = {
         color: "hsl(var(--chart-1))",
     },
 } satisfies ChartConfig;
-type CategoryTotal = { category: string; total: number };
 type MonthlyTotal = { month: string; total: number };
 const DefaultMonthsList = [
     { month: "January", total: 0 },
@@ -56,19 +55,6 @@ const DefaultMonthsList = [
 
 export function ExpansesBarChart({ data }: { data: Expanse[] }) {
     const { chartData, chartConfig } = useMemo(() => {
-        const categoryTotals: CategoryTotal[] = Object.values(
-            data.reduce((acc, expense) => {
-                if (!acc[expense.category]) {
-                    acc[expense.category] = {
-                        category: expense.category,
-                        total: 0,
-                    };
-                }
-                acc[expense.category].total += expense.amount;
-                return acc;
-            }, {} as Record<string, CategoryTotal>)
-        );
-
         const monthlyTotals: MonthlyTotal[] = Object.values(
             data.reduce((acc, expense) => {
                 const month = format(new Date(expense.date), "MMMM");
@@ -99,8 +85,8 @@ export function ExpansesBarChart({ data }: { data: Expanse[] }) {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>By category</CardTitle>
-                <CardDescription>January - June 2024</CardDescription>
+                <CardTitle>Expanses by month</CardTitle>
+                <CardDescription>2023</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>

@@ -30,7 +30,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { Plus } from "lucide-react";
 import { Category, Expanse } from "@/types";
 import { addExpanse, updateExpanse } from "@/actions";
 import { Switch } from "./ui/switch";
@@ -109,7 +108,9 @@ function ExpanseForm({
     defaultData?: Expanse;
     setOpen: (open: boolean) => void;
 }) {
-    const [date, setDate] = React.useState<Date | undefined>(defaultData?.date);
+    const [date, setDate] = React.useState<Date | undefined>(
+        defaultData?.date || new Date()
+    );
     const [loading, setLoading] = React.useState(false);
 
     const onSubmit = React.useCallback(
