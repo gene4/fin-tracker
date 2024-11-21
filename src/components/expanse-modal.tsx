@@ -133,7 +133,7 @@ function ExpanseForm({
 
             setOpen(false);
         },
-        [setOpen, date]
+        [setOpen, date, defaultData]
     );
 
     return (

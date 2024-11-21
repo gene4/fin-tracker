@@ -82,7 +82,9 @@ export function ExpansesPieChart({ data }: { data: Expanse[] }) {
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col">
                     {chartData.map((entry) => (
-                        <div className="w-full flex justify-between">
+                        <div
+                            key={entry.category}
+                            className="w-full flex justify-between">
                             <div className="flex items-center gap-2">
                                 <div
                                     style={{
