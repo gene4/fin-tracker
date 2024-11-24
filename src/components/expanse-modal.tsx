@@ -86,6 +86,7 @@ export function ExpanseModal({
                 <ExpanseForm
                     setOpen={setOpen}
                     categories={categories}
+                    defaultData={defaultData}
                     className="px-4"
                 />
                 <DrawerFooter className="pt-2">
