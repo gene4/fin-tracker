@@ -18,6 +18,7 @@ import {
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { currentUser } from "@clerk/nextjs/server";
+import Head from "next/head";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -50,6 +51,10 @@ export default async function RootLayout({
     return (
         <ClerkProvider>
             <html lang="en">
+                <Head>
+                    <meta name="viewport" content="user-scalable=no" />
+                    <link rel="manifest" href="/site.webmanifest" />
+                </Head>
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
                     <SignedOut>
