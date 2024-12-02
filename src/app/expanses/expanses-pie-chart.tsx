@@ -50,7 +50,7 @@ export function ExpansesPieChart({ data }: { data: Expanse[] }) {
 
     const total = React.useMemo(() => {
         return chartData.reduce((acc, curr) => acc + curr.total, 0);
-    }, []);
+    }, [chartData]);
 
     return (
         <div className="flex flex-col lg:flex-row gap-4 ">

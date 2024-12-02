@@ -80,13 +80,13 @@ export function ExpansesBarChart({ data }: { data: Expanse[] }) {
             chartData: DefaultMonthsList,
             chartConfig: chartConfigs,
         };
-    }, []);
+    }, [data]);
 
     return (
         <Card>
             <CardHeader>
                 <CardTitle>Expanses by month</CardTitle>
-                <CardDescription>2023</CardDescription>
+                <CardDescription>2024</CardDescription>
             </CardHeader>
             <CardContent>
                 <ChartContainer config={chartConfig}>

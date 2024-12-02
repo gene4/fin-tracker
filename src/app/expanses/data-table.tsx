@@ -1,7 +1,6 @@
 "use client";
 
 import {
-    ColumnDef,
     flexRender,
     getCoreRowModel,
     useReactTable,
@@ -19,40 +18,18 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { DataTablePagination } from "./data-table-pagination";
+import { DataTablePagination } from "../../components/ui/data-table-pagination";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Plus, Search } from "lucide-react";
-import { DataTableFacetedFilter } from "./data-table-faceted-filter";
-import { ExpanseModal } from "../expanse-modal";
+import { DataTableFacetedFilter } from "../../components/ui/data-table-faceted-filter";
+import { ExpanseModal } from "../../components/expanse-modal";
 import { Category } from "@/types";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "./select";
 import { createColumns } from "@/app/expanses/columns";
-import { Button } from "./button";
-
-const months = [
-    { label: "January", value: "01" },
-    { label: "February", value: "02" },
-    { label: "March", value: "03" },
-    { label: "April", value: "04" },
-    { label: "May", value: "05" },
-    { label: "June", value: "06" },
-    { label: "July", value: "07" },
-    { label: "August", value: "08" },
-    { label: "September", value: "09" },
-    { label: "October", value: "10" },
-    { label: "November", value: "11" },
-    { label: "December", value: "12" },
-];
+import { Button } from "../../components/ui/button";
+import { MonthSelect } from "@/components/month-select";
 
 interface DataTableProps<TData, TValue> {
-    // columns: ColumnDef<TData, TValue>[];
     data: TData[];
     categories: Category[];
 }
@@ -118,22 +95,11 @@ export function DataTable<TData, TValue>({
                     title="Category"
                     options={categoryOptions}
                 />
-                <Select
+                <MonthSelect
                     onValueChange={(value) =>
                         table.getColumn("date")?.setFilterValue(value)
                     }
-                    name="category">
-                    <SelectTrigger>
-                        <SelectValue className="" placeholder="Month" />
-                    </SelectTrigger>
-                    <SelectContent side="top">
-                        {months.map((month) => (
-                            <SelectItem key={month.value} value={month.value}>
-                                {month.label}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                />
                 <ExpanseModal
                     categories={categories}
                     trigger={

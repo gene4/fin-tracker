@@ -1,4 +1,4 @@
-import { DataTable } from "@/components/ui/data-table";
+import { DataTable } from "@/app/expanses/data-table";
 import { createClient } from "@/utils/supabase/server";
 import { auth } from "@clerk/nextjs/server";
 import { Category } from "@/types";
