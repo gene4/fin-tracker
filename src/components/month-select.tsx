@@ -1,3 +1,5 @@
+"use client";
+
 import { useCallback, useState } from "react";
 import {
     Select,
@@ -6,8 +8,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select";
-import { Button } from "./ui/button";
-import { X } from "lucide-react";
 
 const months = [
     { label: "January", value: "01" },
@@ -40,10 +40,6 @@ export const MonthSelect = ({
         [onValueChange]
     );
 
-    const handleClear = useCallback(() => {
-        setSelectedValue(undefined);
-        onValueChange("");
-    }, [onValueChange]);
     return (
         <Select
             defaultValue={defaultValue}
@@ -60,16 +56,6 @@ export const MonthSelect = ({
                     </SelectItem>
                 ))}
             </SelectContent>
-            {selectedValue && (
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-0 top-0 h-full"
-                    onClick={handleClear}>
-                    <X className="h-4 w-4" />
-                    <span className="sr-only">Clear selection</span>
-                </Button>
-            )}
         </Select>
     );
 };
