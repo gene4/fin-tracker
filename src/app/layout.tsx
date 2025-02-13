@@ -50,7 +50,6 @@ export default async function RootLayout({
             <html lang="en">
                 <Head>
                     <meta name="viewport" content="user-scalable=no" />
-                    <link rel="manifest" href="/site.webmanifest" />
                 </Head>
                 <body
                     className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
