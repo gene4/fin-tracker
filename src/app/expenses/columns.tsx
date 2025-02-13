@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ActionsCell } from "./actions";
 import { Category } from "@/types";
 import { formatEuro } from "@/lib/utils";
+import { parseISO, format } from "date-fns";
 
 export function createColumns(categories: Category[]): ColumnDef<any, any>[] {
     return [
@@ -84,8 +85,8 @@ export function createColumns(categories: Category[]): ColumnDef<any, any>[] {
                 return filterValue.includes(month);
             },
             cell: ({ row }) => {
-                const date = new Date(row.getValue("date"));
-                const formatted = new Intl.DateTimeFormat("de-DE").format(date);
+                const date = parseISO(row.original.date);
+                const formatted = format(date, "dd.MM.yyyy");
 
                 return <div className="text-left font-medium">{formatted}</div>;
             },

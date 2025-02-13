@@ -57,7 +57,7 @@ export function ExpansesBarChart({ data }: { data: Expanse[] }) {
     const { chartData, chartConfig } = useMemo(() => {
         const monthlyTotals: MonthlyTotal[] = Object.values(
             data.reduce((acc, expense) => {
-                const month = format(new Date(expense.date), "MMMM");
+                const month = format(expense.date, "MMMM");
 
                 if (!acc[month]) {
                     acc[month] = { month, total: 0 };

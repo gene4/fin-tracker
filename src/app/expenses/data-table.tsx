@@ -25,7 +25,7 @@ import { Plus, Search } from "lucide-react";
 import { DataTableFacetedFilter } from "../../components/ui/data-table-faceted-filter";
 import { ExpanseModal } from "../../components/expanse-modal";
 import { Category } from "@/types";
-import { createColumns } from "@/app/expanses/columns";
+import { createColumns } from "@/app/expenses/columns";
 import { Button } from "../../components/ui/button";
 import { MonthSelect } from "@/components/month-select";
 

@@ -23,14 +23,15 @@ const months = [
     { label: "November", value: "11" },
     { label: "December", value: "12" },
 ];
+
 export const MonthSelect = ({
     onValueChange,
-    defaultValue,
 }: {
     onValueChange: (value: string) => void;
-    defaultValue?: string;
 }) => {
-    const [selectedValue, setSelectedValue] = useState<string>();
+    const currentDate = new Date();
+    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
+    const [selectedValue, setSelectedValue] = useState<string>(currentMonth);
 
     const handleValueChange = useCallback(
         (value: string) => {
@@ -42,7 +43,6 @@ export const MonthSelect = ({
 
     return (
         <Select
-            defaultValue={defaultValue}
             onValueChange={handleValueChange}
             name="month"
             value={selectedValue}>

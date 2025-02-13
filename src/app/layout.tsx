@@ -2,23 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider, RedirectToSignIn, SignedOut } from "@clerk/nextjs";
-import {
-    SidebarInset,
-    SidebarProvider,
-    SidebarTrigger,
-} from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { Separator } from "@/components/ui/separator";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
-import { currentUser } from "@clerk/nextjs/server";
 import Head from "next/head";
+import { ChartColumn, Plus, Table } from "lucide-react";
+import { FloatingDock } from "@/components/ui/dock";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -41,12 +27,23 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const user = await currentUser();
-    const userObject = {
-        name: user?.fullName ?? "",
-        email: user?.emailAddresses[0].emailAddress ?? "",
-        avatar: user?.imageUrl ?? "",
-    };
+    const dockItems = [
+        {
+            title: "Overview",
+            icon: <ChartColumn className="h-full w-full" />,
+            href: "/expenses",
+        },
+        {
+            title: "List",
+            icon: <Table className="h-full w-full" />,
+            href: "/expenses/all",
+        },
+        {
+            title: "Add Expense",
+            icon: <Plus className="h-full w-full" />,
+            href: "#",
+        },
+    ];
 
     return (
         <ClerkProvider>
@@ -60,38 +57,12 @@ export default async function RootLayout({
                     <SignedOut>
                         <RedirectToSignIn />
                     </SignedOut>
-                    <SidebarProvider>
-                        <AppSidebar user={userObject} />
-                        <SidebarInset>
-                            <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-                                <div className="flex items-center gap-2 px-4">
-                                    <SidebarTrigger className="-ml-1" />
-                                    <Separator
-                                        orientation="vertical"
-                                        className="mr-2 h-4"
-                                    />
-                                    <Breadcrumb>
-                                        <BreadcrumbList>
-                                            <BreadcrumbItem className="hidden md:block">
-                                                <BreadcrumbLink href="/">
-                                                    Dashboard
-                                                </BreadcrumbLink>
-                                            </BreadcrumbItem>
-                                            <BreadcrumbSeparator className="hidden md:block" />
-                                            <BreadcrumbItem>
-                                                <BreadcrumbPage>
-                                                    Data Fetching
-                                                </BreadcrumbPage>
-                                            </BreadcrumbItem>
-                                        </BreadcrumbList>
-                                    </Breadcrumb>
-                                </div>
-                            </header>
-                            <div className="flex flex-1 flex-col gap-4 p-4 lg:px-6">
-                                {children}
-                            </div>
-                        </SidebarInset>
-                    </SidebarProvider>
+                    <div className="flex flex-1 flex-col gap-4 p-4 lg:px-6">
+                        {children}
+                        <div className="fixed bottom-4 right-4">
+                            <FloatingDock items={dockItems} />
+                        </div>
+                    </div>
                 </body>
             </html>
         </ClerkProvider>

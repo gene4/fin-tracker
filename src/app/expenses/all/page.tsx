@@ -1,4 +1,4 @@
-import { DataTable } from "@/app/expanses/data-table";
+import { DataTable } from "@/app/expenses/data-table";
 import { createClient } from "@/utils/supabase/server";
 import { auth } from "@clerk/nextjs/server";
 import { Category } from "@/types";
@@ -19,9 +19,11 @@ export default async function Page() {
         .order("name", { ascending: true });
 
     return (
-        <div>
-            <h1 className="text-3xl font-bold tracking-tight">All Expanses</h1>
-            <div className="container mx-auto py-10">
+        <div className="container mx-auto py-5">
+            <h1 className="text-3xl font-bold tracking-tight pb-10">
+                All Expenses
+            </h1>
+            <div className="">
                 <DataTable
                     data={expanses || []}
                     categories={(categories as Category[]) || []}
