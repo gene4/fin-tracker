@@ -23,12 +23,10 @@ export default async function Page() {
             <h1 className="text-3xl font-bold tracking-tight pb-10">
                 All Expenses
             </h1>
-            <div className="">
-                <DataTable
-                    data={expanses || []}
-                    categories={(categories as Category[]) || []}
-                />
-            </div>
+            <DataTable
+                data={expanses || []}
+                categories={(categories as Category[]) || []}
+            />
         </div>
     );
 }

@@ -26,11 +26,11 @@ const months = [
 
 export const MonthSelect = ({
     onValueChange,
+    currentMonth,
 }: {
     onValueChange: (value: string) => void;
+    currentMonth: string;
 }) => {
-    const currentDate = new Date();
-    const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
     const [selectedValue, setSelectedValue] = useState<string>(currentMonth);
 
     const handleValueChange = useCallback(

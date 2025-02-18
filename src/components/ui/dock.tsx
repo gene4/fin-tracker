@@ -59,14 +59,14 @@ const FloatingDockMobile = ({
                                         setTimeout(() => setOpen(false), 200)
                                     }>
                                     <motion.div
-                                        className="h-10 w-10 rounded-full bg-sidebar-accent active:bg-primary transition-all flex items-center justify-center"
+                                        className="size-12 rounded-full bg-sidebar-accent active:bg-primary transition-all flex items-center justify-center"
                                         whileHover={{ scale: 1.1 }}
                                         transition={{
                                             type: "spring",
                                             stiffness: 400,
                                             damping: 10,
                                         }}>
-                                        <div className="h-4 w-4 text-sidebar-accent-foreground">
+                                        <div className="size-6 text-sidebar-accent-foreground">
                                             {item.icon}
                                         </div>
                                     </motion.div>
@@ -78,10 +78,10 @@ const FloatingDockMobile = ({
             </AnimatePresence>
             <motion.button
                 onClick={() => setOpen(!open)}
-                className="h-10 w-10 rounded-full bg-sidebar-accent flex items-center justify-center"
+                className="size-12 rounded-full bg-sidebar-accent flex items-center justify-center"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400 }}>
-                <IconLayoutNavbarCollapse className="h-5 w-5 text-sidebar-accent-foreground" />
+                <IconLayoutNavbarCollapse className="size-7 text-sidebar-accent-foreground" />
             </motion.button>
         </div>
     );

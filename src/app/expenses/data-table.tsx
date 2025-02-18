@@ -34,13 +34,20 @@ interface DataTableProps<TData, TValue> {
     categories: Category[];
 }
 
+const currentDate = new Date();
+const currentMonth = String(currentDate.getMonth() + 1).padStart(2, "0");
+
 export function DataTable<TData, TValue>({
-    // columns,
     data,
     categories,
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
+        {
+            id: "date",
+            value: currentMonth,
+        },
+    ]);
     const columns = createColumns(categories);
     const table = useReactTable({
         data,
@@ -99,6 +106,7 @@ export function DataTable<TData, TValue>({
                     onValueChange={(value) =>
                         table.getColumn("date")?.setFilterValue(value)
                     }
+                    currentMonth={currentMonth}
                 />
                 <ExpanseModal
                     categories={categories}
