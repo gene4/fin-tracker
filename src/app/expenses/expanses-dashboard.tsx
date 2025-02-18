@@ -31,7 +31,10 @@ export function ExpensesDashboard({
         <>
             <div className="flex items-center gap-4">
                 <h1 className="text-3xl font-bold tracking-tight">Expenses</h1>
-                <MonthSelect onValueChange={setMonth} />
+                <MonthSelect
+                    onValueChange={setMonth}
+                    currentMonth={currentMonth}
+                />
             </div>
             <ExpansesPieChart data={filteredExpanses} />
             <ExpansesBarChart data={initialExpenses} />
