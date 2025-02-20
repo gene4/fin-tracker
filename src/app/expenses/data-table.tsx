@@ -28,6 +28,7 @@ import { Category } from "@/types";
 import { createColumns } from "@/app/expenses/columns";
 import { Button } from "../../components/ui/button";
 import { MonthSelect } from "@/components/month-select";
+import { useDialog } from "@/lib/dialog-context";
 
 interface DataTableProps<TData, TValue> {
     data: TData[];
@@ -41,6 +42,7 @@ export function DataTable<TData, TValue>({
     data,
     categories,
 }: DataTableProps<TData, TValue>) {
+    const { openDialog, setCategories } = useDialog();
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([
         {
@@ -108,14 +110,15 @@ export function DataTable<TData, TValue>({
                     }
                     currentMonth={currentMonth}
                 />
-                <ExpanseModal
-                    categories={categories}
-                    trigger={
-                        <Button variant="outline" size="icon">
-                            <Plus className="size-4" />
-                        </Button>
-                    }
-                />
+                <Button
+                    onClick={() => {
+                        setCategories(categories);
+                        openDialog();
+                    }}
+                    variant="outline"
+                    size="icon">
+                    <Plus className="size-4" />
+                </Button>
             </div>
             <div className="rounded-md border">
                 <Table>

@@ -1,41 +1,61 @@
 "use client";
 
+import { useDialog } from "@/lib/dialog-context";
 import { cn } from "@/lib/utils";
-import { IconLayoutNavbarCollapse } from "@tabler/icons-react";
+import { Category } from "@/types";
+import {
+    IconLayoutNavbarCollapse,
+    IconLayoutNavbarCollapseFilled,
+} from "@tabler/icons-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ChartColumn, Plus, Table } from "lucide-react";
 import Link from "next/link";
-import { useState, type ReactNode } from "react"; // Added ReactNode import
+import { useEffect, useState } from "react";
 
-export const FloatingDock = ({
-    items,
-    className,
-}: {
-    items: { title: string; icon: ReactNode; href: string }[]; // Changed React.ReactNode to ReactNode
-    className?: string;
-}) => {
-    return (
-        <>
-            <FloatingDockMobile items={items} className={className} />
-        </>
-    );
-};
+export const FloatingDock = ({ categories }: { categories: Category[] }) => {
+    const { openDialog, setCategories } = useDialog();
 
-const FloatingDockMobile = ({
-    items,
-    className,
-}: {
-    items: { title: string; icon: ReactNode; href: string }[]; // Changed React.ReactNode to ReactNode
-    className?: string;
-}) => {
+    const dockItems = [
+        {
+            title: "Overview",
+            icon: <ChartColumn className="h-full w-full" />,
+            href: "/expenses",
+        },
+        {
+            title: "List",
+            icon: <Table className="h-full w-full" />,
+            href: "/expenses/all",
+        },
+        {
+            title: "Add Expense",
+            icon: <Plus className="h-full w-full" />,
+            href: "#",
+            onClick: () => {
+                setCategories(categories);
+                openDialog();
+            },
+        },
+    ];
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        if (open) {
+            document.addEventListener("mousedown", () => setOpen(false));
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", () => setOpen(false));
+        };
+    }, [open]);
+
     return (
-        <div className={cn("relative block", className)}>
+        <div className={cn("relative block")}>
             <AnimatePresence>
                 {open && (
                     <motion.div
                         layoutId="nav"
                         className="absolute bottom-full mb-2 inset-x-0 flex flex-col gap-2">
-                        {items.map((item, idx) => (
+                        {dockItems.map((item, idx) => (
                             <motion.div
                                 key={item.title}
                                 initial={{ opacity: 0, y: 10 }}
@@ -51,15 +71,11 @@ const FloatingDockMobile = ({
                                     },
                                 }}
                                 transition={{
-                                    delay: (items.length - 1 - idx) * 0.05,
+                                    delay: (dockItems.length - 1 - idx) * 0.05,
                                 }}>
-                                <Link
-                                    href={item.href}
-                                    onClick={() =>
-                                        setTimeout(() => setOpen(false), 200)
-                                    }>
+                                <Link onClick={item.onClick} href={item.href}>
                                     <motion.div
-                                        className="size-12 rounded-full bg-sidebar-accent active:bg-primary transition-all flex items-center justify-center"
+                                        className="size-12 rounded-full bg-sidebar-accent active:bg-primary hover:bg-primary transition-all flex items-center justify-center"
                                         whileHover={{ scale: 1.1 }}
                                         transition={{
                                             type: "spring",
@@ -81,7 +97,11 @@ const FloatingDockMobile = ({
                 className="size-12 rounded-full bg-sidebar-accent flex items-center justify-center"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400 }}>
-                <IconLayoutNavbarCollapse className="size-7 text-sidebar-accent-foreground" />
+                {open ? (
+                    <IconLayoutNavbarCollapseFilled className="size-7 text-sidebar-accent-foreground" />
+                ) : (
+                    <IconLayoutNavbarCollapse className="size-7 text-sidebar-accent-foreground" />
+                )}
             </motion.button>
         </div>
     );

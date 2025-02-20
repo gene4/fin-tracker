@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -8,7 +9,6 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog";
 import {
     Drawer,
@@ -18,7 +18,6 @@ import {
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
-    DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,23 +34,15 @@ import { addExpanse, updateExpanse } from "@/actions";
 import { Switch } from "./ui/switch";
 import { DatePicker } from "./ui/date-picker";
 import { format } from "date-fns";
+import { useDialog } from "@/lib/dialog-context";
 
-export function ExpanseModal({
-    categories,
-    trigger,
-    defaultData,
-}: {
-    categories: Category[];
-    trigger: JSX.Element;
-    defaultData?: Expanse;
-}) {
-    const [open, setOpen] = React.useState(false);
+export function ExpanseModal() {
+    const { isOpen, closeDialog, categories, defaultData } = useDialog();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     if (isDesktop) {
         return (
-            <Dialog open={open} onOpenChange={setOpen}>
-                <DialogTrigger asChild>{trigger}</DialogTrigger>
+            <Dialog open={isOpen} onOpenChange={closeDialog}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
                         <DialogTitle>
@@ -63,7 +54,7 @@ export function ExpanseModal({
                     </DialogHeader>
                     <ExpanseForm
                         categories={categories}
-                        setOpen={setOpen}
+                        setOpen={closeDialog}
                         defaultData={defaultData}
                     />
                 </DialogContent>
@@ -72,8 +63,7 @@ export function ExpanseModal({
     }
 
     return (
-        <Drawer open={open} onOpenChange={setOpen}>
-            <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+        <Drawer open={isOpen} onOpenChange={closeDialog}>
             <DrawerContent>
                 <DrawerHeader className="text-left">
                     <DrawerTitle>
@@ -84,7 +74,7 @@ export function ExpanseModal({
                     </DrawerDescription>
                 </DrawerHeader>
                 <ExpanseForm
-                    setOpen={setOpen}
+                    setOpen={closeDialog}
                     categories={categories}
                     defaultData={defaultData}
                     className="px-4"

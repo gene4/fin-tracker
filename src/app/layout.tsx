@@ -3,8 +3,11 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ClerkProvider, RedirectToSignIn, SignedOut } from "@clerk/nextjs";
 import Head from "next/head";
-import { ChartColumn, Plus, Table } from "lucide-react";
 import { FloatingDock } from "@/components/ui/dock";
+import { DialogProvider } from "@/lib/dialog-context";
+import { ExpanseModal } from "@/components/expanse-modal";
+import { createClient } from "@/utils/supabase/server";
+import { Category } from "@/types";
 
 const geistSans = localFont({
     src: "./fonts/GeistVF.woff",
@@ -27,23 +30,11 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const dockItems = [
-        {
-            title: "Overview",
-            icon: <ChartColumn className="h-full w-full" />,
-            href: "/expenses",
-        },
-        {
-            title: "List",
-            icon: <Table className="h-full w-full" />,
-            href: "/expenses/all",
-        },
-        {
-            title: "Add Expense",
-            icon: <Plus className="h-full w-full" />,
-            href: "#",
-        },
-    ];
+    const supabase = await createClient();
+    const { data: categories } = await supabase
+        .from("categories")
+        .select()
+        .order("name", { ascending: true });
 
     return (
         <ClerkProvider>
@@ -56,12 +47,17 @@ export default async function RootLayout({
                     <SignedOut>
                         <RedirectToSignIn />
                     </SignedOut>
-                    <div className="flex flex-1 flex-col gap-4 p-4 lg:px-6">
-                        {children}
-                        <div className="fixed bottom-4 right-4">
-                            <FloatingDock items={dockItems} />
+                    <DialogProvider>
+                        <div className="flex flex-1 flex-col gap-4 p-4 lg:px-6">
+                            {children}
+                            <div className="fixed bottom-4 right-4">
+                                <FloatingDock
+                                    categories={categories as Category[]}
+                                />
+                            </div>
                         </div>
-                    </div>
+                        <ExpanseModal />
+                    </DialogProvider>
                 </body>
             </html>
         </ClerkProvider>

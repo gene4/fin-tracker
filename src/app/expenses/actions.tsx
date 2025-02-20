@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Category, Expanse } from "@/types";
 import { deleteExpanse } from "@/actions";
-import { ExpanseModal } from "@/components/expanse-modal";
+import { useDialog } from "@/lib/dialog-context";
 
 export const ActionsCell = ({
     row,
@@ -34,6 +34,7 @@ export const ActionsCell = ({
 }) => {
     const expanse = row.original;
     const [open, setOpen] = useState(false);
+    const { openDialog, setCategories, setDefaultData } = useDialog();
 
     const onDelete = () => {
         deleteExpanse(expanse.id);
@@ -52,18 +53,17 @@ export const ActionsCell = ({
                 <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuItem asChild className="justify-between">
-                        <ExpanseModal
-                            defaultData={expanse}
-                            categories={categories}
-                            trigger={
-                                <Button
-                                    className="w-full justify-between px-2"
-                                    variant={"ghost"}>
-                                    Edit
-                                    <Pencil className="h-4 w-4" />
-                                </Button>
-                            }
-                        />
+                        <Button
+                            onClick={() => {
+                                setCategories(categories);
+                                setDefaultData(expanse);
+                                openDialog();
+                            }}
+                            className="w-full justify-between px-2"
+                            variant={"ghost"}>
+                            Edit
+                            <Pencil className="h-4 w-4" />
+                        </Button>
                     </DropdownMenuItem>
                     <DialogTrigger asChild>
                         <DropdownMenuItem
